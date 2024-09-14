@@ -3,15 +3,7 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-
-// import Timeline from "@mui/lab/Timeline";
-// import TimelineItem from "@mui/lab/TimelineItem";
-// import TimelineSeparator from "@mui/lab/TimelineSeparator";
-// import TimelineConnector from "@mui/lab/TimelineConnector";
-// import TimelineContent from "@mui/lab/TimelineContent";
-// import TimelineDot from "@mui/lab/TimelineDot";
 import { useState } from "react";
-// import { Stack, Typography } from "@mui/material";
 
 const TabsByPeriod = () => {
   const [tab, setTab] = useState("this week");
@@ -38,12 +30,6 @@ const TabsByPeriod = () => {
     },
   };
 
-  // const customTimelineStyle = {
-  //   "& .MuiTimelineItem-root::before": {
-  //     content: "none",
-  //   },
-  // };
-
   return (
     <section className="border w-7/12">
       <Box sx={customTabsStyle}>
@@ -55,7 +41,7 @@ const TabsByPeriod = () => {
               paddingTop: "52px",
               paddingLeft: "30px",
               background: "#EFEEEC",
-              marginBottom: "24px",
+              height: "100px",
             }}
           >
             <TabList onChange={handleChange}>
@@ -65,9 +51,12 @@ const TabsByPeriod = () => {
             </TabList>
           </Box>
 
-          <div className="w-full">
+          <div
+            className="w-full overflow-y-scroll"
+            style={{ height: "calc(90vh - 60px)" }}
+          >
             <TabPanel value="this week">
-              <div>
+              <div className="day-wrapper">
                 <div className="w-full bg-[#ECECEC] p-2 pl-16 font-semibold text-sm">
                   <p className="text-[#787878]">Today (Mon, 20 Sep)</p>
                 </div>
@@ -95,85 +84,64 @@ const TabsByPeriod = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+              <div className="day-wrapper">
+                <div className="w-full bg-[#ECECEC] p-2 pl-16 font-semibold text-sm">
+                  <p className="text-[#787878]">Today (Mon, 20 Sep)</p>
+                </div>
 
-                {/* <Timeline sx={customTimelineStyle}>
-                  <TimelineItem>
-                    <TimelineSeparator>
-                      <TimelineDot />
-                      <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Typography
-                        component="span"
-                        sx={{
-                          color: "grey",
-                          fontWeight: "100",
-                          fontSize: "12px",
-                        }}
-                      >
-                        13:00 - 14:00
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontWeight: "400",
-                        }}
-                      >
-                        Lunch with Petr
-                      </Typography>
-                    </TimelineContent>
-                  </TimelineItem>
+                <div className="pl-7">
+                  <div className="border-l">
+                    <div className="pl-5 py-5 relative">
+                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
+                      <p className="font-light">Lunch with Petr</p>
+                    </div>
+                  </div>
+                  <div className="border-l">
+                    <div className="pl-5 py-5 relative">
+                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
+                      <p className="font-light">Lunch with Petr</p>
+                    </div>
+                  </div>
+                  <div className="border-l">
+                    <div className="pl-5 py-5 relative">
+                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
+                      <p className="font-light">Lunch with Petr</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="day-wrapper">
+                <div className="w-full bg-[#ECECEC] p-2 pl-16 font-semibold text-sm">
+                  <p className="text-[#787878]">Today (Mon, 20 Sep)</p>
+                </div>
 
-                  <TimelineItem>
-                    <TimelineSeparator>
-                      <TimelineDot />
-                      <TimelineConnector />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Typography
-                        component="span"
-                        sx={{
-                          color: "grey",
-                          fontWeight: "100",
-                          fontSize: "12px",
-                        }}
-                      >
-                        13:00 - 14:00
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontWeight: "400",
-                        }}
-                      >
-                        Lunch with Petr
-                      </Typography>
-                    </TimelineContent>
-                  </TimelineItem>
-
-                  <TimelineItem>
-                    <TimelineSeparator>
-                      <TimelineDot />
-                    </TimelineSeparator>
-                    <TimelineContent>
-                      <Typography
-                        component="span"
-                        sx={{
-                          color: "grey",
-                          fontWeight: "100",
-                          fontSize: "12px",
-                        }}
-                      >
-                        13:00 - 14:00
-                      </Typography>
-                      <Typography
-                        sx={{
-                          fontWeight: "400",
-                        }}
-                      >
-                        Lunch with Petr
-                      </Typography>
-                    </TimelineContent>
-                  </TimelineItem>
-                </Timeline> */}
+                <div className="pl-7">
+                  <div className="border-l">
+                    <div className="pl-5 py-5 relative">
+                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
+                      <p className="font-light">Lunch with Petr</p>
+                    </div>
+                  </div>
+                  <div className="border-l">
+                    <div className="pl-5 py-5 relative">
+                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
+                      <p className="font-light">Lunch with Petr</p>
+                    </div>
+                  </div>
+                  <div className="border-l">
+                    <div className="pl-5 py-5 relative">
+                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
+                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
+                      <p className="font-light">Lunch with Petr</p>
+                    </div>
+                  </div>
+                </div>
               </div>
             </TabPanel>
             <TabPanel value="next month">Item Two</TabPanel>

@@ -1,8 +1,8 @@
 const TodayBooking = () => {
   return (
-    <section className="w-5/12 min-w-2/6 flex flex-col items-end gap-12 bg-[#46529D] ">
+    <section className="w-5/12 min-w-2/6 flex flex-col items-end gap-12 bg-[#46529D]">
       {/* RoomId */}
-      <div className="w-4/5 bg-[#2EBAEE] text-white pt-10 pl-5 pb-5 text-4xl font-semibold">
+      <div className="w-4/5 bg-[#2EBAEE] text-white pt-10 pl-5 pb-5 text-4xl font-semibold h-[100px]">
         A101
       </div>
 

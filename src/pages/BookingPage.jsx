@@ -9,7 +9,7 @@ const BookingPage = () => {
   // const roomId = searchParams.get("roomId");
 
   return (
-    <main className="border flex h-screen">
+    <main className="flex h-screen">
       <TodayBooking />
       <TabsByPeriod />
     </main>

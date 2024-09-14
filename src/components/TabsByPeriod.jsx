@@ -31,7 +31,7 @@ const TabsByPeriod = () => {
   };
 
   return (
-    <section className="border w-7/12">
+    <section className="w-7/12">
       <Box sx={customTabsStyle}>
         <TabContext value={tab}>
           <Box
@@ -53,9 +53,13 @@ const TabsByPeriod = () => {
 
           <div
             className="w-full overflow-y-scroll"
-            style={{ height: "calc(90vh - 60px)" }}
+            style={{ height: "calc(90vh - 40px)" }}
           >
             <TabPanel value="this week">
+              <div className="pl-7">
+                <div className="border-l h-10"></div>
+              </div>
+
               <div className="day-wrapper">
                 <div className="w-full bg-[#ECECEC] p-2 pl-16 font-semibold text-sm">
                   <p className="text-[#787878]">Today (Mon, 20 Sep)</p>

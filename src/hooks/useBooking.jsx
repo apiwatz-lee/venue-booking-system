@@ -58,27 +58,52 @@ const useBooking = () => {
 
     setBookingEvents((event) => ({
       ...event,
-      today: bookings.filter(
-        (booking) =>
-          booking.roomId === roomId &&
-          isBookingWithinRange(booking, todayStart, todayEnd)
-      ),
+      today: bookings
+        .filter(
+          (booking) =>
+            booking.roomId === roomId &&
+            isBookingWithinRange(booking, todayStart, todayEnd)
+        )
+        .sort((a, b) => a.startTime - b.startTime),
       thisWeek: bookings.filter(
         (booking) =>
           booking.roomId === roomId &&
           isBookingWithinRange(booking, currentWeekStart, currentWeekEnd)
       ),
-      nextWeek: bookings.filter(
-        (booking) =>
-          booking.roomId === roomId &&
-          isBookingWithinRange(booking, nextWeekStart, nextWeekEnd)
-      ),
-      wholeMonth: bookings.filter(
-        (booking) =>
-          booking.roomId === roomId &&
-          isBookingWithinRange(booking, currentMonthStart, currentMonthEnd)
-      ),
+      nextWeek: bookings
+        .filter(
+          (booking) =>
+            booking.roomId === roomId &&
+            isBookingWithinRange(booking, nextWeekStart, nextWeekEnd)
+        )
+        .sort((a, b) => a.startTime - b.startTime),
+      wholeMonth: bookings
+        .filter(
+          (booking) =>
+            booking.roomId === roomId &&
+            isBookingWithinRange(booking, currentMonthStart, currentMonthEnd)
+        )
+        .sort((a, b) => a.startTime - b.startTime),
     }));
+  };
+
+  /**
+   * Group the bookings by day to display in the timeline
+   * @param {*} data - The list of bookings to group by day
+   * @returns Object containing the bookings grouped by day
+   */
+  const groupBookingByDay = (data) => {
+    return data.reduce((groups, booking) => {
+      const date = booking.startTime.split(" ")[0];
+
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+
+      groups[date].push(booking);
+
+      return groups;
+    }, {});
   };
 
   useEffect(() => {
@@ -91,6 +116,7 @@ const useBooking = () => {
   return {
     bookingEvents,
     roomId,
+    groupBookingByDay,
   };
 };
 

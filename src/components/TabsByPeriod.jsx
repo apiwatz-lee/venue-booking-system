@@ -85,15 +85,12 @@ const TabsByPeriod = () => {
             style={{ height: "calc(90vh - 40px)" }}
           >
             <TabPanel value="thisweek">
-              <VerticalLine />
               <Timeline data={bookingEvents?.thisWeek} />
             </TabPanel>
             <TabPanel value="nextweek">
-              <VerticalLine />
               <Timeline data={bookingEvents?.nextWeek} />
             </TabPanel>
             <TabPanel value="wholemonth">
-              <VerticalLine />
               <Timeline data={bookingEvents?.wholeMonth} />
             </TabPanel>
           </div>

@@ -28,20 +28,20 @@ const Timeline = ({ data = [] }) => {
 
   const handleRandomColorClass = () => {
     const colors = [
-      "red-500",
-      "blue-500",
-      "green-500",
-      "yellow-500",
-      "purple-500",
-      "pink-500",
-      "indigo-500",
-      "gray-500",
-      "orange-500",
-      "teal-500",
+      "bg-red-500",
+      "bg-blue-500",
+      "bg-green-500",
+      "bg-yellow-500",
+      "bg-purple-500",
+      "bg-pink-500",
+      "bg-indigo-500",
+      "bg-gray-500",
+      "bg-orange-500",
+      "bg-teal-500",
     ];
 
     const randomIndex = Math.floor(Math.random() * colors.length);
-    return `bg-${colors[randomIndex]}`;
+    return colors[randomIndex];
   };
 
   useEffect(() => {

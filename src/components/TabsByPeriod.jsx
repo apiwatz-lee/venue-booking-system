@@ -3,10 +3,18 @@ import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import TabList from "@mui/lab/TabList";
 import TabPanel from "@mui/lab/TabPanel";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import useBooking from "../hooks/useBooking";
+import Timeline from "./Timeline";
+import VerticalLine from "./VerticalLine";
 
 const TabsByPeriod = () => {
-  const [tab, setTab] = useState("this week");
+  const [tab, setTab] = useState("thisweek");
+  const { period } = useParams();
+  const navigate = useNavigate();
+  const { bookingEvents, roomId } = useBooking();
+  const periodList = ["thisweek", "nextweek", "wholemonth"];
 
   const handleChange = (event, newValue) => {
     setTab(newValue);
@@ -30,6 +38,13 @@ const TabsByPeriod = () => {
     },
   };
 
+  useEffect(() => {
+    if (!periodList.includes(period)) {
+      navigate("/bookings/thisweek?roomId=A101");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <section className="w-7/12">
       <Box sx={customTabsStyle}>
@@ -45,9 +60,23 @@ const TabsByPeriod = () => {
             }}
           >
             <TabList onChange={handleChange}>
-              <Tab label="THIS WEEK" value="this week" />
-              <Tab label="NEXT WEEK" value="next month" />
-              <Tab label="WHOLE MONTH" value="whole month" />
+              <Tab
+                label="THIS WEEK"
+                value="thisweek"
+                onClick={() => navigate(`/bookings/thisweek?roomId=${roomId}`)}
+              />
+              <Tab
+                label="NEXT WEEK"
+                value="nextweek"
+                onClick={() => navigate(`/bookings/nextweek?roomId=${roomId}`)}
+              />
+              <Tab
+                label="WHOLE MONTH"
+                value="wholemonth"
+                onClick={() =>
+                  navigate(`/bookings/wholemonth?roomId=${roomId}`)
+                }
+              />
             </TabList>
           </Box>
 
@@ -55,101 +84,18 @@ const TabsByPeriod = () => {
             className="w-full overflow-y-scroll"
             style={{ height: "calc(90vh - 40px)" }}
           >
-            <TabPanel value="this week">
-              <div className="pl-7">
-                <div className="border-l h-10"></div>
-              </div>
-
-              <div className="day-wrapper">
-                <div className="w-full bg-[#ECECEC] p-2 pl-16 font-semibold text-sm">
-                  <p className="text-[#787878]">Today (Mon, 20 Sep)</p>
-                </div>
-
-                <div className="pl-7">
-                  <div className="border-l">
-                    <div className="pl-5 py-5 relative">
-                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
-                      <p className="font-light">Lunch with Petr</p>
-                    </div>
-                  </div>
-                  <div className="border-l">
-                    <div className="pl-5 py-5 relative">
-                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
-                      <p className="font-light">Lunch with Petr</p>
-                    </div>
-                  </div>
-                  <div className="border-l">
-                    <div className="pl-5 py-5 relative">
-                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
-                      <p className="font-light">Lunch with Petr</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="day-wrapper">
-                <div className="w-full bg-[#ECECEC] p-2 pl-16 font-semibold text-sm">
-                  <p className="text-[#787878]">Today (Mon, 20 Sep)</p>
-                </div>
-
-                <div className="pl-7">
-                  <div className="border-l">
-                    <div className="pl-5 py-5 relative">
-                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
-                      <p className="font-light">Lunch with Petr</p>
-                    </div>
-                  </div>
-                  <div className="border-l">
-                    <div className="pl-5 py-5 relative">
-                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
-                      <p className="font-light">Lunch with Petr</p>
-                    </div>
-                  </div>
-                  <div className="border-l">
-                    <div className="pl-5 py-5 relative">
-                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
-                      <p className="font-light">Lunch with Petr</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="day-wrapper">
-                <div className="w-full bg-[#ECECEC] p-2 pl-16 font-semibold text-sm">
-                  <p className="text-[#787878]">Today (Mon, 20 Sep)</p>
-                </div>
-
-                <div className="pl-7">
-                  <div className="border-l">
-                    <div className="pl-5 py-5 relative">
-                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
-                      <p className="font-light">Lunch with Petr</p>
-                    </div>
-                  </div>
-                  <div className="border-l">
-                    <div className="pl-5 py-5 relative">
-                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
-                      <p className="font-light">Lunch with Petr</p>
-                    </div>
-                  </div>
-                  <div className="border-l">
-                    <div className="pl-5 py-5 relative">
-                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500"></span>
-                      <p className="text-sm text-gray-400">13:00 - 14:00</p>
-                      <p className="font-light">Lunch with Petr</p>
-                    </div>
-                  </div>
-                </div>
-              </div>
+            <TabPanel value="thisweek">
+              <VerticalLine />
+              <Timeline data={bookingEvents?.thisWeek} />
             </TabPanel>
-            <TabPanel value="next month">Item Two</TabPanel>
-            <TabPanel value="whole month">Item Three</TabPanel>
+            <TabPanel value="nextweek">
+              <VerticalLine />
+              <Timeline data={bookingEvents?.nextWeek} />
+            </TabPanel>
+            <TabPanel value="wholemonth">
+              <VerticalLine />
+              <Timeline data={bookingEvents?.wholeMonth} />
+            </TabPanel>
           </div>
         </TabContext>
       </Box>

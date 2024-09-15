@@ -26,6 +26,24 @@ const Timeline = ({ data = [] }) => {
     }
   };
 
+  const handleRandomColorClass = () => {
+    const colors = [
+      "red-500",
+      "blue-500",
+      "green-500",
+      "yellow-500",
+      "purple-500",
+      "pink-500",
+      "indigo-500",
+      "gray-500",
+      "orange-500",
+      "teal-500",
+    ];
+
+    const randomIndex = Math.floor(Math.random() * colors.length);
+    return `bg-${colors[randomIndex]}`;
+  };
+
   useEffect(() => {
     setBookingByDay(groupBookingByDay(data));
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -48,9 +66,11 @@ const Timeline = ({ data = [] }) => {
 
               <div className="pl-7">
                 <div className="border-l">
-                  {bookings.map((booking) => (
-                    <div key={booking.id} className="pl-5 py-5 relative">
-                      <span className="absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 bg-sky-500" />
+                  {bookings?.map((booking) => (
+                    <div key={booking?.id} className="pl-5 py-5 relative">
+                      <span
+                        className={`absolute -left-1 top-6 inline-flex rounded-full h-2 w-2 ${handleRandomColorClass()}`}
+                      />
 
                       <p className="text-sm text-gray-400">
                         {booking?.startTime?.split(" ")[1].slice(0, 5)} -{" "}

@@ -6,7 +6,6 @@ import useBooking from "./hooks/useBooking";
 function App() {
   const navigate = useNavigate();
   const { roomId } = useBooking();
-
   const routes = [{ path: "/bookings/:period", element: <BookingPage /> }];
   const roomLists = ["A101", "A102", "Auditorium"];
 

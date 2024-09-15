@@ -2,15 +2,15 @@ export const bookings = [
   {
     id: 1,
     roomId: "A101",
-    startTime: "2024-09-15 15:00:00",
-    endTime: "2024-09-15 16:00:00",
+    startTime: "2024-09-16 15:00:00",
+    endTime: "2024-09-16 16:00:00",
     title: "Lunch with Petr",
   },
   {
     id: 2,
     roomId: "A101",
-    startTime: "2024-09-15 16:00:00",
-    endTime: "2024-09-15 17:00:00",
+    startTime: "2024-09-16 16:00:00",
+    endTime: "2024-09-16 17:00:00",
     title: "Sales Weekly Meeting",
   },
   {

@@ -9,8 +9,8 @@ import useBooking from "../hooks/useBooking";
 import Timeline from "./Timeline";
 
 const TabsByPeriod = () => {
-  const [tab, setTab] = useState("thisweek");
   const { period } = useParams();
+  const [tab, setTab] = useState(period);
   const navigate = useNavigate();
   const { bookingEvents, roomId } = useBooking();
   const periodList = ["thisweek", "nextweek", "wholemonth"];
@@ -40,6 +40,7 @@ const TabsByPeriod = () => {
   useEffect(() => {
     if (!periodList.includes(period)) {
       navigate("/bookings/thisweek?roomId=A101");
+      setTab("thisweek");
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

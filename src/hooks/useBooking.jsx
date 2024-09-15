@@ -106,6 +106,15 @@ const useBooking = () => {
     }, {});
   };
 
+  const handleCheckUpComingBookings = (bookings) => {
+    const currentTime = new Date().getTime();
+
+    return bookings.filter((booking) => {
+      const bookingStart = new Date(booking.startTime).getTime();
+      return bookingStart >= currentTime;
+    });
+  };
+
   useEffect(() => {
     if (roomId) {
       bookingsByPeriod(roomId);
@@ -117,6 +126,7 @@ const useBooking = () => {
     bookingEvents,
     roomId,
     groupBookingByDay,
+    handleCheckUpComingBookings,
   };
 };
 

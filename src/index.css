@@ -2,6 +2,33 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+
+  ::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #b9b9b9;
+    border-radius: 100px;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #b9b9b9;
+  }
+  ::-webkit-scrollbar-corner {
+    background: transparent;
+  }
+  &:focus {
+    outline: none;
+  }
 }
 
 @tailwind base;

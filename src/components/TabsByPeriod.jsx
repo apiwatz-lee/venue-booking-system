@@ -7,7 +7,6 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import useBooking from "../hooks/useBooking";
 import Timeline from "./Timeline";
-import VerticalLine from "./VerticalLine";
 
 const TabsByPeriod = () => {
   const [tab, setTab] = useState("thisweek");

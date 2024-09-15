@@ -53,7 +53,22 @@ const useDate = () => {
     return `${hours}:${minutes}`;
   };
 
-  return { handleCurrentDate, handleTimeFormatted, handleTimelineDate };
+  const handleCheckToday = (date) => {
+    return new Date().getDate() === new Date(date).getDate();
+  };
+
+  const handleCheckTomorrow = (date) => {
+    const today = new Date();
+    return today.getDate() + 1 === new Date(date).getDate();
+  };
+
+  return {
+    handleCurrentDate,
+    handleTimeFormatted,
+    handleTimelineDate,
+    handleCheckToday,
+    handleCheckTomorrow,
+  };
 };
 
 export default useDate;

@@ -7,10 +7,28 @@ import useDate from "../hooks/useDate";
 const Timeline = ({ data = [] }) => {
   const [bookingByDay, setBookingByDay] = useState({});
   const { groupBookingByDay } = useBooking();
-  const { handleTimelineDate } = useDate();
+  const { handleTimelineDate, handleCheckToday, handleCheckTomorrow } =
+    useDate();
+
+  const handleDisplayDate = (dateString) => {
+    if (handleCheckToday(dateString)) {
+      return `Today (${handleTimelineDate(dateString)?.dayName}, ${
+        handleTimelineDate(dateString)?.day
+      } ${handleTimelineDate(dateString)?.month})`;
+    } else if (handleCheckTomorrow(dateString)) {
+      return `Tomorrow (${handleTimelineDate(dateString)?.dayName}, ${
+        handleTimelineDate(dateString)?.day
+      } ${handleTimelineDate(dateString)?.month})`;
+    } else {
+      return `${handleTimelineDate(dateString)?.dayName}, ${
+        handleTimelineDate(dateString)?.day
+      } ${handleTimelineDate(dateString)?.month}`;
+    }
+  };
 
   useEffect(() => {
     setBookingByDay(groupBookingByDay(data));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data]);
 
   return (
@@ -25,11 +43,7 @@ const Timeline = ({ data = [] }) => {
           {Object.entries(bookingByDay).map(([date, bookings]) => (
             <div key={date} className="day-wrapper">
               <div className="w-full bg-[#ECECEC] p-2 pl-16 font-semibold text-sm">
-                <p className="text-[#787878]">{`${
-                  handleTimelineDate(date).dayName
-                }, ${handleTimelineDate(date).day} ${
-                  handleTimelineDate(date).month
-                }`}</p>{" "}
+                <p className="text-[#787878]">{handleDisplayDate(date)}</p>
               </div>
 
               <div className="pl-7">

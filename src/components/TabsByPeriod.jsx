@@ -70,7 +70,13 @@ const TabsByPeriod = () => {
           >
             {tabletSize ? (
               <>
-                <Button onClick={toggleDrawer(true)}>Select Period</Button>
+                <Button onClick={toggleDrawer(true)}>
+                  {period === "nextweek"
+                    ? "NEXT WEEK"
+                    : period === "wholemonth"
+                    ? "WHOLE MONTH"
+                    : "THIS WEEK"}
+                </Button>
                 <Drawer
                   open={drawerOpen}
                   onClose={toggleDrawer(false)}

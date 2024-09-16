@@ -1,5 +1,14 @@
 import { bookings } from "../data/Booking";
 import { useEffect, useState } from "react";
+import {
+  startOfDay,
+  endOfDay,
+  startOfWeek,
+  endOfWeek,
+  startOfMonth,
+  endOfMonth,
+  isWithinInterval,
+} from "date-fns";
 
 const useBooking = () => {
   const [bookingEvents, setBookingEvents] = useState({
@@ -12,78 +21,75 @@ const useBooking = () => {
   const searchParams = new URLSearchParams(window.location.search);
   const roomId = searchParams.get("roomId");
 
-  const isBookingWithinRange = (booking, rangeStart, rangeEnd) => {
-    // Helper function to check if booking overlaps with a date range
-    const bookingStart = new Date(booking.startTime).getTime();
-    const bookingEnd = new Date(booking.endTime).getTime();
+  /**
+   *
+   * @param {*} booking:- The booking to check if it is within the range
+   * @param {*} range - The range to check if the booking is within
+   * @returns Boolean - True if the booking is within the range, false otherwise
+   */
+  const isBookingWithinRange = (booking, range) => {
+    const bookingStart = new Date(booking.startTime);
+    const bookingEnd = new Date(booking.endTime);
     return (
-      (bookingStart >= rangeStart.getTime() &&
-        bookingStart <= rangeEnd.getTime()) ||
-      (bookingEnd >= rangeStart.getTime() &&
-        bookingEnd <= rangeEnd.getTime()) ||
-      (bookingStart < rangeStart.getTime() && bookingEnd > rangeEnd.getTime()) // Spans over the range
+      isWithinInterval(bookingStart, {
+        start: range.start,
+        end: range.end,
+      }) ||
+      isWithinInterval(bookingEnd, { start: range.start, end: range.end }) ||
+      (bookingStart < range.start && bookingEnd > range.end) // Booking spans over the whole range
     );
   };
 
-  /**
-   *
-   * @param {*} roomId - The room ID to filter the bookings
-   * @returns Object containing the bookings for today, this week, next week, and the whole month
-   */
   const bookingsByPeriod = (roomId) => {
     const now = new Date();
 
-    // Clone the current date to avoid mutating the 'now' object
-    const todayStart = new Date(now);
-    const todayEnd = new Date(now);
-    todayStart.setHours(0, 0, 0, 0); // Start of today
-    todayEnd.setHours(23, 59, 59, 999); // End of today
+    const todayRange = {
+      start: startOfDay(now),
+      end: endOfDay(now),
+    };
 
-    // This week (Monday to Sunday)
-    const currentWeekStart = new Date(todayStart);
-    const currentWeekEnd = new Date(currentWeekStart);
-    currentWeekStart.setDate(todayStart.getDate() - todayStart.getDay() + 1); // Monday of current week
-    currentWeekEnd.setDate(currentWeekStart.getDate() + 6); // Sunday of current week
+    const thisWeekRange = {
+      start: startOfWeek(now),
+      end: endOfWeek(now),
+    };
 
-    // Next week (Monday to Sunday)
-    const nextWeekStart = new Date(currentWeekEnd);
-    const nextWeekEnd = new Date(nextWeekStart);
-    nextWeekStart.setDate(currentWeekEnd.getDate() + 1); // Start of next Monday
-    nextWeekEnd.setDate(nextWeekStart.getDate() + 6); // End of next Sunday
+    const nextWeekRange = {
+      start: startOfWeek(
+        new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7),
+        { weekStartsOn: 1 }
+      ),
+      end: endOfWeek(
+        new Date(now.getFullYear(), now.getMonth(), now.getDate() + 7),
+        { weekStartsOn: 1 }
+      ),
+    };
 
-    // Whole month (from the 1st day to the last day of the current month)
-    const currentMonthStart = new Date(now.getFullYear(), now.getMonth(), 1); // Start of the month
-    const currentMonthEnd = new Date(now.getFullYear(), now.getMonth() + 1, 0); // End of the month
-    currentMonthEnd.setHours(23, 59, 59, 999); // Set to the end of the last day of the month
+    const thisMonthRange = {
+      start: startOfMonth(now),
+      end: endOfMonth(now),
+    };
 
     setBookingEvents((event) => ({
       ...event,
-      today: bookings
-        .filter(
-          (booking) =>
-            booking.roomId === roomId &&
-            isBookingWithinRange(booking, todayStart, todayEnd)
-        )
-        .sort((a, b) => a.startTime - b.startTime),
+      today: bookings.filter(
+        (booking) =>
+          booking.roomId === roomId && isBookingWithinRange(booking, todayRange)
+      ),
       thisWeek: bookings.filter(
         (booking) =>
           booking.roomId === roomId &&
-          isBookingWithinRange(booking, currentWeekStart, currentWeekEnd)
+          isBookingWithinRange(booking, thisWeekRange)
       ),
-      nextWeek: bookings
-        .filter(
-          (booking) =>
-            booking.roomId === roomId &&
-            isBookingWithinRange(booking, nextWeekStart, nextWeekEnd)
-        )
-        .sort((a, b) => a.startTime - b.startTime),
-      wholeMonth: bookings
-        .filter(
-          (booking) =>
-            booking.roomId === roomId &&
-            isBookingWithinRange(booking, currentMonthStart, currentMonthEnd)
-        )
-        .sort((a, b) => a.startTime - b.startTime),
+      nextWeek: bookings.filter(
+        (booking) =>
+          booking.roomId === roomId &&
+          isBookingWithinRange(booking, nextWeekRange)
+      ),
+      wholeMonth: bookings.filter(
+        (booking) =>
+          booking.roomId === roomId &&
+          isBookingWithinRange(booking, thisMonthRange)
+      ),
     }));
   };
 
@@ -99,6 +105,8 @@ const useBooking = () => {
       if (!groups[date]) {
         groups[date] = [];
       }
+
+      console.log(groups);
 
       groups[date].push(booking);
 

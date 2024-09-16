@@ -2,27 +2,25 @@ import { useEffect, useState } from "react";
 import VerticalLine from "./VerticalLine";
 import useBooking from "../hooks/useBooking";
 import useDate from "../hooks/useDate";
+import { isToday, isTomorrow } from "date-fns";
 
 // eslint-disable-next-line react/prop-types
 const Timeline = ({ data = [] }) => {
   const [bookingByDay, setBookingByDay] = useState({});
   const { groupBookingByDay } = useBooking();
-  const { handleTimelineDate, handleCheckToday, handleCheckTomorrow } =
-    useDate();
+  const { timeFormat, dayNameFormat, dateMonthFormat } = useDate();
 
   const handleDisplayDate = (dateString) => {
-    if (handleCheckToday(dateString)) {
-      return `Today (${handleTimelineDate(dateString)?.dayName}, ${
-        handleTimelineDate(dateString)?.day
-      } ${handleTimelineDate(dateString)?.month})`;
-    } else if (handleCheckTomorrow(dateString)) {
-      return `Tomorrow (${handleTimelineDate(dateString)?.dayName}, ${
-        handleTimelineDate(dateString)?.day
-      } ${handleTimelineDate(dateString)?.month})`;
+    if (isToday(dateString)) {
+      return `Today (${dayNameFormat(dateString)}, ${dateMonthFormat(
+        dateString
+      )})`;
+    } else if (isTomorrow(dateString)) {
+      return `Tomorrow (${dayNameFormat(dateString)}, ${dateMonthFormat(
+        dateString
+      )})`;
     } else {
-      return `${handleTimelineDate(dateString)?.dayName}, ${
-        handleTimelineDate(dateString)?.day
-      } ${handleTimelineDate(dateString)?.month}`;
+      return `(${dayNameFormat(dateString)}, ${dateMonthFormat(dateString)})`;
     }
   };
 
@@ -73,8 +71,9 @@ const Timeline = ({ data = [] }) => {
                       />
 
                       <p className="text-sm text-gray-400">
-                        {booking?.startTime?.split(" ")[1].slice(0, 5)} -{" "}
-                        {booking?.endTime?.split(" ")[1].slice(0, 5)}
+                        {`${timeFormat(booking?.startTime)} - ${timeFormat(
+                          booking?.endTime
+                        )}`}
                       </p>
 
                       <p className="font-light">{booking?.title}</p>

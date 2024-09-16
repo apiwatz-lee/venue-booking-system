@@ -4,7 +4,7 @@ import useDate from "../hooks/useDate";
 
 const TodayBooking = () => {
   const { bookingEvents, roomId, handleCheckUpComingBookings } = useBooking();
-  const { handleCurrentDate, handleTimeFormatted } = useDate();
+  const { currentDateName, currentDayAndMonth, timeFormat } = useDate();
   const [upcomingBookings, setUpcomingBookings] = useState([]);
 
   useEffect(() => {
@@ -28,10 +28,10 @@ const TodayBooking = () => {
 
         <div className="mt-10">
           <p className="text-4xl font-thin -tracking-tighter text-white opacity-50">
-            {`${handleCurrentDate()?.dayName}`}
+            {`${currentDateName()}`}
           </p>
           <p className="text-4xl font-thin -tracking-tighter text-white mt-2">
-            {`${handleCurrentDate()?.day} ${handleCurrentDate()?.month}`}
+            {`${currentDayAndMonth()}`}
           </p>
         </div>
 
@@ -40,8 +40,8 @@ const TodayBooking = () => {
             upcomingBookings.map((booking) => (
               <div key={booking?.id}>
                 <p className="text-sm text-white opacity-50 ">
-                  {`${handleTimeFormatted(booking?.startTime)} -
-                ${handleTimeFormatted(booking?.endTime)}`}
+                  {`${timeFormat(booking?.startTime)} -
+                ${timeFormat(booking?.endTime)}`}
                 </p>
                 <p className="text-white">{`${booking?.title}`}</p>
               </div>

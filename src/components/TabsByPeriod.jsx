@@ -24,7 +24,7 @@ const TabsByPeriod = () => {
     setDrawerOpen(newOpen);
   };
 
-  const handleChange = (event, newValue) => {
+  const handleTabChange = (event, newValue) => {
     setTab(newValue);
   };
 
@@ -90,7 +90,7 @@ const TabsByPeriod = () => {
                 >
                   <TabList
                     indicatorColor="none"
-                    onChange={handleChange}
+                    onChange={handleTabChange}
                     sx={{
                       "& .MuiTabs-flexContainer": {
                         flexDirection: "column",
@@ -126,7 +126,7 @@ const TabsByPeriod = () => {
                 </Drawer>
               </>
             ) : (
-              <TabList onChange={handleChange}>
+              <TabList onChange={handleTabChange}>
                 <Tab
                   label="THIS WEEK"
                   value="thisweek"

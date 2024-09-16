@@ -9,6 +9,7 @@ import useBooking from "../hooks/useBooking";
 import Timeline from "./Timeline";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Button, Drawer } from "@mui/material";
+import KeyboardDoubleArrowLeftIcon from "@mui/icons-material/KeyboardDoubleArrowLeft";
 
 const TabsByPeriod = () => {
   const { period } = useParams();
@@ -70,13 +71,17 @@ const TabsByPeriod = () => {
           >
             {tabletSize ? (
               <>
-                <Button onClick={toggleDrawer(true)}>
-                  {period === "nextweek"
-                    ? "NEXT WEEK"
-                    : period === "wholemonth"
-                    ? "WHOLE MONTH"
-                    : "THIS WEEK"}
-                </Button>
+                <Box onClick={toggleDrawer(true)}>
+                  <Button>
+                    {period === "nextweek"
+                      ? "NEXT WEEK"
+                      : period === "wholemonth"
+                      ? "WHOLE MONTH"
+                      : "THIS WEEK"}
+                  </Button>
+                  <KeyboardDoubleArrowLeftIcon color="primary" />
+                </Box>
+
                 <Drawer
                   open={drawerOpen}
                   onClose={toggleDrawer(false)}

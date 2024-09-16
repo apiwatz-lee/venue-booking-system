@@ -106,8 +106,6 @@ const useBooking = () => {
         groups[date] = [];
       }
 
-      console.log(groups);
-
       groups[date].push(booking);
 
       return groups;
